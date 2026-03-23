@@ -28,7 +28,7 @@ export default function SubmitForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col bg-indigo-300 shadow-sm px-12 py-4 gap-4 rounded-lg font-bold items-center"
+      className="flex flex-col bg-indigo-300 font-sans shadow-sm px-12 py-4 gap-4 rounded-lg font-bold items-center"
     >
       <span className=" text-white text-[22px] pb-2">{titleSpan}</span>
       <div className="flex flex-col">
