@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UserRequest extends FormRequest
+class AuthRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,18 +22,10 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $isCreating = $this->isMethod('post');
-        $userId = $this->route('user') ?? $this->route('id');
-
         return [
-            'name' => [$isCreating ? 'required' : 'sometimes', 'string', 'max:255'],
-            'email' => [
-                $isCreating ? 'required' : 'sometimes',
-                'email',
-                'max:255',
-                Rule::unique('users', 'email')->ignore($userId),
-            ],
-            'password' => [$isCreating ? 'required' : 'sometimes', 'string', 'min:8'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
         ];
     }
 

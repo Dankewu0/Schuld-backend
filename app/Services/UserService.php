@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -16,11 +17,19 @@ class UserService
 
     public function createUser(array $data): User
     {
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make((string) $data['password']);
+        }
+
         return User::create($data);
     }
 
     public function updateUser(User $user, array $data): User
     {
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make((string) $data['password']);
+        }
+
         $user->update($data);
 
         return $user;

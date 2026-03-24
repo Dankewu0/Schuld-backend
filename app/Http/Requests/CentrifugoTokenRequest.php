@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChatsRequest extends FormRequest
+class CentrifugoTokenRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,9 @@ class ChatsRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->isMethod('post')) {
-            return [
-                'other_user_id' => ['required', 'integer', 'exists:users,id'],
-            ];
-        }
-
-        return [];
+        return [
+            'chat_id' => ['required', 'integer', 'exists:chats,id'],
+        ];
     }
 
     /**
@@ -39,9 +35,9 @@ class ChatsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'other_user_id.required' => 'Пользователь обязателен.',
-            'other_user_id.integer' => 'Пользователь должен быть числом.',
-            'other_user_id.exists' => 'Указанный пользователь не найден.',
+            'chat_id.required' => 'Чат обязателен.',
+            'chat_id.integer' => 'Чат должен быть числом.',
+            'chat_id.exists' => 'Указанный чат не найден.',
         ];
     }
 }

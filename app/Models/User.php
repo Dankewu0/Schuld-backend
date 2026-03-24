@@ -13,11 +13,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(["name", "email", "password"])]
-#[Hidden(["password", "remember_token"])]
+#[Fillable(['name', 'email', 'password'])]
+#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
+    use HasApiTokens;
+
     use HasFactory, Notifiable;
     use HasRoles;
 
@@ -29,18 +31,18 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            "email_verified_at" => "datetime",
-            "password" => "hashed",
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
         ];
     }
 
     public function chatMembers(): HasMany
     {
-        return $this->hasMany(Chat_Members::class, "user_id");
+        return $this->hasMany(Chat_Members::class, 'user_id');
     }
 
     public function messages(): HasMany
     {
-        return $this->hasMany(Messages::class, "sender_id");
+        return $this->hasMany(Messages::class, 'sender_id');
     }
 }

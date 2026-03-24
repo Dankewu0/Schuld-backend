@@ -14,6 +14,14 @@ class ChatMembersService
             ->paginate($perPage);
     }
 
+    public function isUserInChat(int $chatId, int $userId): bool
+    {
+        return Chat_Members::query()
+            ->where('chat_id', $chatId)
+            ->where('user_id', $userId)
+            ->exists();
+    }
+
     public function createChatMember(array $data): Chat_Members
     {
         return Chat_Members::create($data);
